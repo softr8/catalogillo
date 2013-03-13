@@ -1,0 +1,12 @@
+= Catalogillo
+High performance catalogs page engine, it uses solr to power all catalog pages no database is needed,
+you can index new data using services, add new products, categories, etc. and this engine will take care
+of render catalogs with ultra high performance.
+
+== Ruby on Rails Engine
+Mount this engine in your rails app, customize your layout and index products and launch it to tons of users!
+
+
+
+
+This project rocks and uses MIT-LICENSE.

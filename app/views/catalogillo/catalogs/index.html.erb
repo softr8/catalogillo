@@ -1,0 +1,5 @@
+<ul>
+  <% @hits.each do |hit|%>
+    <li><%=  hit.stored(:name)%></li>
+  <% end %>
+</ul>
