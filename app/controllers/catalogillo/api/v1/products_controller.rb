@@ -1,11 +1,7 @@
 module Catalogillo
   module Api
     module V1
-      class CatalogsController < ApplicationController
-
-        rescue_from Catalogillo::ModelBase::Error do |exception|
-          render json: {errors: exception.message, usage: Product.usage}, status: :unprocessable_entity
-        end
+      class ProductsController < ApplicationController
 
         def index
           params[:products].each do |p|
@@ -14,6 +10,9 @@ module Catalogillo
           head Sunspot.commit ? :ok : :unprocessable_entity
         end
 
+        def destroy
+          head Sunspot.remove(Catalogillo::Product) { with(:id, params[:id])} ? :ok : :unprocessable_entity
+        end
       end
     end
   end

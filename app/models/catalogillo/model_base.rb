@@ -3,7 +3,7 @@ module Catalogillo
     class Error < Exception ; end
 
     def initialize options
-      unless ((options.keys || []) & required_fields).size >= required_fields.size
+      unless (options.keys.map(&:to_s) & required_fields).size >= required_fields.size
         passed = options.keys.try(:join, ', ')
         passed = passed.blank? ? "none" : passed
         raise Error.new("Missing required attributes, required: #{required_fields.join(', ')}, passed: #{passed}")
@@ -20,7 +20,6 @@ module Catalogillo
     end
 
     include Sunspot::CatalogilloSolr
-
 
     def self.usage
       metadata

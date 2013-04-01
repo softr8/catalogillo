@@ -4,7 +4,13 @@ Catalogillo::Engine.routes.draw do
   #  match '/update' => 'v1/catalogs#update', :via => :post
   #end
 
-  match "/api/v1/catalog/index" => 'api/v1/catalogs#index', via: :post
+  match "/api/v1/products/index" => 'api/v1/products#index', via: :post
+  match "/api/v1/products/destroy/:id" => 'api/v1/products#destroy', via: :delete
+
+  match "/api/v1/categories/index" => 'api/v1/categories#index', via: :post
+  match "/api/v1/categories/destroy/:id" => 'api/v1/categories#destroy', via: :delete
+
+  match "/api/v1/dynamic_categories/index" => 'api/v1/dynamic_categories#index', via: :post
 
   match "/:slug" => 'catalogs#index'
 end

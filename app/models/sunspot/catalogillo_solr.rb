@@ -3,8 +3,19 @@ module Sunspot
     def self.included(base)
       base.class_eval do
         extend Sunspot::Rails::Searchable::ActsAsMethods
+        extend MakeItSearchable
         Sunspot::Adapters::DataAccessor.register(DataAccessor, base)
         Sunspot::Adapters::InstanceAdapter.register(InstanceAdapter, base)
+      end
+    end
+
+    module MakeItSearchable
+      def make_it_searchable
+        searchable(auto_index: false, auto_remove: false) do
+          metadata[:fields].each do |field|
+            send field[:type].downcase, field[:name], stored: true
+          end
+        end
       end
     end
 

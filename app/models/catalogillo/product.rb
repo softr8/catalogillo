@@ -6,17 +6,15 @@ module Catalogillo
           fields: [
               {name: "id", type: "Integer", required: true, desctiption: "unique identifier"},
               {name: "name", type: "String", required: true, desctiption: "Product Name"},
+              {name: "category_id", type: "Integer", required: true, desctiption: "Category Id"},
+              {name: "category_name", type: "String", required: true, desctiption: "Category Name"},
               {name: "version", type: "integer", required: true, desctiption: "Current Product Version, expires cache when changed"},
               {name: "pdp_url", type: "String", required: false, desctiption: "Product detail page url"}
           ]
       }
     end
 
-    searchable(auto_index: false, auto_remove: false) do
-      integer :id, stored: true
-      integer :version, stored: true
-      string :name, stored: true
-    end
+    make_it_searchable
 
     def self.filter params
       Collection.new(search do
