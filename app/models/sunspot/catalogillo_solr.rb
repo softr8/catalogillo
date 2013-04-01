@@ -13,7 +13,8 @@ module Sunspot
       def make_it_searchable
         searchable(auto_index: false, auto_remove: false) do
           metadata[:fields].each do |field|
-            send field[:type].downcase, field[:name], stored: true
+            field_type, field_mode = field[:type].split('-')
+            send field_type.downcase, field[:name], stored: true, multiple: field_mode.eql?("Array")
           end
         end
       end

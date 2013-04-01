@@ -6,8 +6,8 @@ describe Catalogillo::Api::V1::ProductsController do
     let(:valid_params) {
       {
           products: [
-              {id: 1, name: 'Pechan 1', version: 1, category_id: 1000, category_name: "Category One", pdp_url: "http://superhost.com/products/pechan-1"},
-              {id: 2, name: 'Pechan 2', version: 1, category_id: 1001, category_name: "Category One - One", pdp_url: "http://superhost.com/products/pechan-2"}
+              {id: 1, name: 'Pechan 1', version: 1, category_ids: [1000], category_name: "Category One", pdp_url: "http://superhost.com/products/pechan-1"},
+              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1001], category_name: "Category One - One", pdp_url: "http://superhost.com/products/pechan-2"}
           ]
       }
     }
@@ -23,7 +23,7 @@ describe Catalogillo::Api::V1::ProductsController do
 
     it "returns errors when required fields are not passed" do
       post :index, {products: [{id: 1}]}
-      response.body.should =~ /Missing required attributes, required: id, name, category_id, category_name, version/
+      response.body.should =~ /Missing required attributes, required: id, name, category_ids, version/
     end
 
     context "indexes new products" do
@@ -34,8 +34,7 @@ describe Catalogillo::Api::V1::ProductsController do
 
       its(:name) { should == "Pechan 1" }
       its(:version) { should == 1 }
-      its(:category_id) { should == 1000 }
-      its(:category_name) { should == "Category One" }
+      its(:category_ids) { should == [1000] }
       its(:pdp_url) { should == "http://superhost.com/products/pechan-1" }
     end
   end

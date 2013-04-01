@@ -6,8 +6,7 @@ module Catalogillo
           fields: [
               {name: "id", type: "Integer", required: true, desctiption: "unique identifier"},
               {name: "name", type: "String", required: true, desctiption: "Product Name"},
-              {name: "category_id", type: "Integer", required: true, desctiption: "Category Id"},
-              {name: "category_name", type: "String", required: true, desctiption: "Category Name"},
+              {name: "category_ids", type: "Integer-Array", required: true, desctiption: "Category Ids"},
               {name: "version", type: "integer", required: true, desctiption: "Current Product Version, expires cache when changed"},
               {name: "pdp_url", type: "String", required: false, desctiption: "Product detail page url"}
           ]
