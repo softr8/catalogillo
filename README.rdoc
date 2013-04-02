@@ -13,5 +13,27 @@ product.rb
 To index new products
 
 
+== Categories
+Creating categories with dynamic content is as easy as use solr query language, it's stored in json format then decoded and
+catalogillo applies the filters to get the desired results.
+Example:
+
+  {
+    category_ids: {between: 1006..1007},
+    name: starting_with: "sale"
+  }
+
+This filters are going to return all products that the name starts with sale and the category_ids are between those ids,
+remember that category_ids is a multi-value field and solr filters the correct data out of the box, it's very easy to assign
+multiple categories to a single product. More info here in [Sunspot](https://github.com/sunspot/sunspot/wiki/Scoping-by-attribute-fields) documentation.
+
+
+== Config
+You can control global configurations
+
+  Catalogillo.config do |config|
+    config.per_page = 10
+    config.page = 1
+  end
 
 This project rocks and uses MIT-LICENSE.

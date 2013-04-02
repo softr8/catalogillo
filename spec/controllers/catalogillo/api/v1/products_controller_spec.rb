@@ -6,8 +6,8 @@ describe Catalogillo::Api::V1::ProductsController do
     let(:valid_params) {
       {
           products: [
-              {id: 1, name: 'Pechan 1', version: 1, category_ids: [1000], category_name: "Category One", pdp_url: "http://superhost.com/products/pechan-1"},
-              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1001], category_name: "Category One - One", pdp_url: "http://superhost.com/products/pechan-2"}
+              {id: 1, name: 'Pechan 1', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-1"},
+              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-2"}
           ]
       }
     }
@@ -27,7 +27,7 @@ describe Catalogillo::Api::V1::ProductsController do
     end
 
     context "indexes new products" do
-      subject { Catalogillo::Product.filter(id: 1).first }
+      subject { Catalogillo::Product.filter(filters: {id: 1}).first }
       before do
         post :index, valid_params
       end

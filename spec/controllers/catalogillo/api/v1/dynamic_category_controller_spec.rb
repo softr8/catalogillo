@@ -16,7 +16,6 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
 
     it "returns ok if solr commit succeeds" do
       post :index, filtered_one
-      puts response.body
       response.should be_ok
     end
 

@@ -15,10 +15,21 @@ module Catalogillo
 
     make_it_searchable
 
-    def self.filter params
+    def self.filter options = {}
+      filters = options[:filters] || {}
       Collection.new(search do
-        with(:id, params[:id]) if params.has_key?(:id)
-        with(:name, params[:name]) if params.has_key?(:name)
+        paginate page: options[:page] || Catalogillo::Config.page, per_page: (options[:per_page] || Catalogillo::Config.per_page)
+        filters.each_pair do |key, value|
+          if value.is_a?(Hash)
+            any_of do
+              value.keys.each do |method|
+                with(key).send(method, value[method])
+              end
+            end
+          else
+            with(key, value)
+          end
+        end
       end)
     end
 

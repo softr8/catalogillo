@@ -12,7 +12,6 @@ describe Catalogillo::Api::V1::CategoriesController do
 
     it "returns ok if solr commit succeeds" do
       post :index, valid_params
-      puts response.body
       response.should be_ok
     end
 
