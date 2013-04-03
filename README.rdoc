@@ -46,7 +46,7 @@ Examples:
 
   {
     category_ids: {between: 1006..1007},
-    name: starting_with: "sale"
+    name: {starting_with: "sale"}
   }
 
   {
@@ -102,6 +102,7 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 * Add security to API endpoints
 * Sorting options per dynamic category
 * More Caching layers
+* Lazy loading Product Images
 
 
 == About the author
