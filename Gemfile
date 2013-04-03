@@ -16,7 +16,7 @@ gem "jquery-rails"
 # To use debugger
 # gem 'debugger'
 
-group :test do
+group :local_test do
   gem "ZenTest"
   gem "autotest-fsevent"
   gem "autotest-growl"

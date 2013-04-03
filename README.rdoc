@@ -3,6 +3,9 @@ High performance catalogs page engine for ruby on rails, it uses solr to power a
 you can index new data using services, add new products, categories and dynamic categories (searches) and this engine will take care
 of render catalogs with ultra high performance.
 
+== Build status
+{<img src="https://travis-ci.org/softr8/catalogillo.png" />}[https://travis-ci.org/softr8/catalogillo]
+
 == Ruby on Rails Engine
 Mount this engine in your rails app, customize your layout and index products and launch it to tons of users!
 
