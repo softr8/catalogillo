@@ -1,7 +1,7 @@
 Catalogillo::Engine.routes.draw do
 
   #api_version(:module => "api", :path => {:value => "api/v1/catalog"}) do
-  #  match '/update' => 'v1/catalogs#update', :via => :post
+  #  match '/update' => 'v1/categories#update', :via => :post
   #end
 
   match "/api/v1/products/index" => 'api/v1/products#index', via: :post
@@ -12,5 +12,6 @@ Catalogillo::Engine.routes.draw do
 
   match "/api/v1/dynamic_categories/index" => 'api/v1/dynamic_categories#index', via: :post
 
-  match "/:slug" => 'catalogs#index'
+  match "/:slug" => 'categories#index'
+  match "/search/:keyword" => 'categories#search'
 end

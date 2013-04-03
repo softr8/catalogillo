@@ -5,12 +5,12 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
   context "POST #index" do
     let(:filtered_one) {
       {dynamic_category:
-           {id: 1, name: "filtered one", slug: "filtered-one", search_query: "{\"category_ids\":[1000,1001]}", version: 1}
+           {id: 1, name: "filtered one", slug: "filtered-one", search_query: {category_ids:[1000,1001]}, version: 1}
       }
     }
     let(:filtered_two) {
       {dynamic_category:
-           {id: 2, name: "filtered two", slug: "filtered-two", search_query: "{\"name\":\"filtered two\"}", version: 1}
+           {id: 2, name: "filtered two", slug: "filtered-two", search_query: {name:"filtered two"}, version: 1}
       }
     }
 
@@ -30,7 +30,7 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
     end
 
     context "indexes new dynamic category" do
-      subject { Catalogillo::DynamicCategory.filter(name: "filtered two").first }
+      subject { Catalogillo::DynamicCategory.filter(filters: {name: "filtered two"}).first }
       before do
         post :index, filtered_two
       end
@@ -38,7 +38,7 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
       its(:name) { should == "filtered two" }
       its(:version) { should == 1 }
       its(:slug) { should == "filtered-two" }
-      its(:search_query) { should == "{\"name\":\"filtered two\"}" }
+      its(:query) { should == {"name" => "filtered two"} }
     end
   end
 end

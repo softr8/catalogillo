@@ -2,10 +2,11 @@ require 'singleton'
 module Catalogillo
   class Config
     include Singleton
-    attr_accessor :per_page, :page
+    attr_accessor :per_page, :page, :default_image
     def initialize
       @per_page = 50
       @page = 1
+      @default_image = "catalogillo/no_image.jpg"
     end
 
     class << self

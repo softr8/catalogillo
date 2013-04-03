@@ -21,6 +21,28 @@ module Catalogillo
 
     include Sunspot::CatalogilloSolr
 
+    def self.filter options = {}
+      filters = options[:filters] || {}
+      keyword = filters.delete(:keywords)
+      Collection.new(search do
+        paginate page: options[:page] || Catalogillo::Config.page, per_page: (options[:per_page] || Catalogillo::Config.per_page)
+
+        keywords keyword unless keyword.blank?
+
+        filters.each_pair do |key, value|
+          if value.is_a?(Hash)
+            any_of do
+              value.keys.each do |method|
+                with(key).send(method, value[method])
+              end
+            end
+          else
+            with(key, value)
+          end
+        end
+      end)
+    end
+
     def self.usage
       metadata
     end
@@ -38,22 +60,15 @@ module Catalogillo
 
       def to_ary
         @result_hit_collection ||= @collection.map do |hit|
-          ResultHit.new(hit)
+          klass = hit.class_name.constantize
+          attributes = {}
+          klass.metadata[:fields].collect {|field| field[:name]}.each do |field_name|
+            attributes[field_name] = hit.stored(field_name)
+          end
+          klass.new(attributes)
         end
       end
 
-    end
-
-    class ResultHit
-      attr_accessor :hit
-
-      def initialize hit
-        @hit = hit
-      end
-
-      def method_missing name, *args
-        hit.stored(name) rescue super(*args)
-      end
     end
 
     private

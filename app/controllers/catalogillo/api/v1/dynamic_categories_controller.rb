@@ -4,7 +4,8 @@ module Catalogillo
       class DynamicCategoriesController < ApplicationController
 
         def index
-          Sunspot.index DynamicCategory.new params[:dynamic_category]
+          search_query = params[:dynamic_category].delete(:search_query)
+          Sunspot.index DynamicCategory.new params[:dynamic_category].merge(search_query: ActiveSupport::JSON.encode(search_query))
           head Sunspot.commit ? :ok : :unprocessable_entity
         end
 

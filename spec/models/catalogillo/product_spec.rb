@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Catalogillo::Product do
   let(:valid_params) {
-    {version: 1, pdp_url: "http://superhost.com/products/pechan-1"}
+    {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56}
   }
   before :all do
-    10.times { |index| Sunspot.index Catalogillo::Product.new valid_params.merge(id: index, name: "Product #{index}", category_ids: [1000 + index, 1000 - index]) }
+    10.times { |index| Sunspot.index Catalogillo::Product.new valid_params.merge(id: index, name: "Product #{index}", category_ids: [1000 + index, 1000 - index], fulltext_keywords: "keyword#{index}") }
     Sunspot.commit
   end
 
@@ -33,7 +33,7 @@ describe Catalogillo::Product do
 
     describe "category id between" do
       it "filters 1006 and 1007 categories ids" do
-        products = Catalogillo::Product.filter(filters: {category_ids: {between: 1006..1007}})
+        products = Catalogillo::Product.filter(filters: {category_ids: {between: [1006, 1007]}})
         products.map(&:name).should == ["Product 6", "Product 7"]
       end
     end
@@ -52,6 +52,13 @@ describe Catalogillo::Product do
       it "paginates results" do
         products = Catalogillo::Product.filter(per_page: 3)
         products.count.should == 3
+      end
+    end
+
+    describe "fulltext search" do
+      it "filters based on keywords" do
+        products = Catalogillo::Product.filter(filters: {keywords: "keyword1"})
+        products.first.name.should == "Product 1"
       end
     end
   end

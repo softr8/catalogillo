@@ -1,0 +1,7 @@
+<div class="row">
+  <ul class="unstyled">
+    <% @hits.each do |hit| %>
+      <%= render partial: 'product', locals:{hit: hit } %>
+    <% end %>
+  </ul>
+</div>

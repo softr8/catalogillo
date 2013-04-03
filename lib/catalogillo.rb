@@ -1,5 +1,6 @@
 require "catalogillo/engine"
 require "catalogillo/config"
+require "catalogillo/exceptions"
 
 module Catalogillo
 

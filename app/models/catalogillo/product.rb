@@ -4,34 +4,25 @@ module Catalogillo
     def self.metadata
       {
           fields: [
-              {name: "id", type: "Integer", required: true, desctiption: "unique identifier"},
-              {name: "name", type: "String", required: true, desctiption: "Product Name"},
-              {name: "category_ids", type: "Integer-Array", required: true, desctiption: "Category Ids"},
-              {name: "version", type: "integer", required: true, desctiption: "Current Product Version, expires cache when changed"},
-              {name: "pdp_url", type: "String", required: false, desctiption: "Product detail page url"}
+              {name: "id", type: "Integer", required: true, description: "unique identifier"},
+              {name: "name", type: "String", required: true, description: "Product Name"},
+              {name: "category_ids", type: "Integer-Array", required: true, description: "Category Ids"},
+              {name: "price", type: "float", required: true, description: "Product Price"},
+              {name: "sale_price", type: "float", required: false, description: "Product Sale Price"},
+              {name: "on_sale", type: "Boolean", required: false, description: "Product Sale Price active?"},
+              {name: "version", type: "integer", required: true, description: "Current Product Version, expires cache when changed"},
+              {name: "images", type: "String-Array", required: false, description: "Product images"},
+              {name: "high_res_images", type: "String-Array", required: false, description: "Product images"},
+              {name: "fulltext_keywords", type: "Text", required: false, description: "Product description to be used in searches"},
+              {name: "pdp_url", type: "String", required: false, description: "Product detail page url"}
           ]
       }
     end
 
     make_it_searchable
 
-    def self.filter options = {}
-      filters = options[:filters] || {}
-      Collection.new(search do
-        paginate page: options[:page] || Catalogillo::Config.page, per_page: (options[:per_page] || Catalogillo::Config.per_page)
-        filters.each_pair do |key, value|
-          if value.is_a?(Hash)
-            any_of do
-              value.keys.each do |method|
-                with(key).send(method, value[method])
-              end
-            end
-          else
-            with(key, value)
-          end
-        end
-      end)
+    def first_thumbnail_image
+      images.try(:first).blank? ? Catalogillo::Config.default_image : images.try(:first)
     end
-
   end
 end

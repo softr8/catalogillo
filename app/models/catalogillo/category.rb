@@ -5,11 +5,11 @@ module Catalogillo
       def metadata
         {
             fields: [
-                {name: "id", type: "Integer", required: true, desctiption: "Category unique identifier"},
-                {name: "name", type: "String", required: true, desctiption: "Category name"},
-                {name: "ancestry_id", type: "Integer", required: true, desctiption: "Parent's category"},
-                {name: "slug", type: "String", required: true, desctiption: "Category slug's name"},
-                {name: "version", type: "integer", required: true, desctiption: "Current Category Version, expires cache when changed"},
+                {name: "id", type: "Integer", required: true, description: "Category unique identifier"},
+                {name: "name", type: "String", required: true, description: "Category name"},
+                {name: "ancestry_id", type: "Integer", required: true, description: "Parent's category"},
+                {name: "slug", type: "String", required: true, description: "Category slug's name"},
+                {name: "version", type: "integer", required: true, description: "Current Category Version, expires cache when changed"},
             ]
         }
       end

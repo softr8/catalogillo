@@ -7,26 +7,65 @@ of render catalogs with ultra high performance.
 Mount this engine in your rails app, customize your layout and index products and launch it to tons of users!
 
 == Schema
-product.rb
+
+  Product
+    id: Product unique identifier
+    name: Product Name
+    category_ids: Category Ids
+    price: Product Price
+    sale_price: Product Sale Price
+    on_sale: Product Sale Price active?
+    version: Current Product Version, expires cache when changed
+    images: Product images
+    high_res_images: Product images
+    fulltext_keywords: Product description to be used in searches
+    pdp_url: Product detail page url
+
+  Dynamic Category
+    id: Dynamic Category unique identifier
+    name: Dynamic Category name
+    slug: Dynamic Category slug's name
+    search_query: Search Query
+    version: Current Dynamic Category Version, expires cache when changed
 
 == Indexing new products
-To index new products
+You can send updates to this rails app from your main ecomm app via API, the endpoints are:
+
+  POST   /namespace/api/v1/products/index(.:format)
+  DELETE /namespace/api/v1/products/destroy/:id(.:format)
+  POST   /namespace/api/v1/dynamic_categories/index(.:format)
 
 
 == Categories
 Creating categories with dynamic content is as easy as use solr query language, it's stored in json format then decoded and
 catalogillo applies the filters to get the desired results.
-Example:
+Examples:
 
   {
     category_ids: {between: 1006..1007},
     name: starting_with: "sale"
   }
 
+  {
+    price: {greater_than: 50}
+  }
+
+
 This filters are going to return all products that the name starts with sale and the category_ids are between those ids,
 remember that category_ids is a multi-value field and solr filters the correct data out of the box, it's very easy to assign
 multiple categories to a single product. More info here in [Sunspot](https://github.com/sunspot/sunspot/wiki/Scoping-by-attribute-fields) documentation.
 
+== Usage
+Install this gem and mount the engine in your desired namespace
+
+  #Gemfile
+  gem 'catalogillo', github: '/softr8/catalogillo'
+
+  #config/routes.rb
+  mount Catalogillo::Engine => "/store"
+
+Personalize your application layout and that's it! You can build some jsonp calls to your main ecomm to show shopping cart
+status in the header, or hook with unobstrusive javascript a quicklook.
 
 == Config
 You can control global configurations
@@ -34,6 +73,35 @@ You can control global configurations
   Catalogillo.config do |config|
     config.per_page = 10
     config.page = 1
+    config.default_image = "http://cdn.super-domain.com/images/no-image.png"
   end
 
-This project rocks and uses MIT-LICENSE.
+
+== Demo
+If you want to have a look at it, you can launch the dummy app from spec's folder
+
+  cd spec/dummy
+  bundle
+  be sunspot-solr start
+  be rails c
+    include './db/seed.rb'
+    exit
+  be rails s
+
+== TODO
+* Add security to API endpoints
+* Sorting options per dynamic category
+* Pagination
+* More Caching layers
+
+
+# About the author
+
+[Crowd Interactive](http://www.crowdint.com) is a leading Ruby and Rails
+consultancy firm based in Mexico currently doing business with startups in the
+United States. We specialize in building and growing Rails applications, by increasing
+your IT crew onsite or offsite. We pick our projects carefully, as we only work
+with companies we believe in.
+
+== License
+This project uses MIT-LICENSE.

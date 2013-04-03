@@ -1,0 +1,10 @@
+<% cache("catalog-product-#{hit.id}-#{hit.version}") do %>
+  <%= content_tag('li', "catalog-product-{hit.id}", class: 'span2') do
+    link_to hit.pdp_url do %>
+      <%= content_tag('div', image_tag(hit.first_thumbnail_image)) %>
+      <%= content_tag('div', hit.name, id: "catalog-product-name-#{hit.id}") %>
+      <%= content_tag('small', "$#{hit.price}", id: "catalog-product-price-#{hit.id}") %>
+      <%= content_tag('small', "$#{hit.sale_price}", class: 'on-sale') if hit.on_sale %>
+    <% end
+  end
+end %>

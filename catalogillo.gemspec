@@ -9,9 +9,9 @@ Gem::Specification.new do |s|
   s.version     = Catalogillo::VERSION
   s.authors     = ["Edwin Cruz"]
   s.email       = ["softr8@gmail.com"]
-  s.homepage    = "TODO"
-  s.summary     = "Solr powered catalogs"
-  s.description = "Mountable engine active record independent to generate catalogs pages using solr"
+  s.homepage    = "https://github.com/softr8/catalogillo"
+  s.summary     = "Solr powered product categories a.k.a catalogs"
+  s.description = "Mountable Ruby on Rails engine, ActiveRecordless that generates catalog pages using solr"
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
 

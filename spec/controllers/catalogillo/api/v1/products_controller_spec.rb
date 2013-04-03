@@ -6,8 +6,8 @@ describe Catalogillo::Api::V1::ProductsController do
     let(:valid_params) {
       {
           products: [
-              {id: 1, name: 'Pechan 1', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-1"},
-              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-2"}
+              {id: 1, name: 'Pechan 1', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-1", price: 45.65},
+              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-2", price: 34.34}
           ]
       }
     }
@@ -23,7 +23,7 @@ describe Catalogillo::Api::V1::ProductsController do
 
     it "returns errors when required fields are not passed" do
       post :index, {products: [{id: 1}]}
-      response.body.should =~ /Missing required attributes, required: id, name, category_ids, version/
+      response.body.should =~ /Missing required attributes, required: id, name, category_ids, price, version/
     end
 
     context "indexes new products" do
