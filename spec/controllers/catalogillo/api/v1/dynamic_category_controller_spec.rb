@@ -5,7 +5,7 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
   context "POST #index" do
     let(:filtered_one) {
       {dynamic_category:
-           {id: 1, name: "filtered one", slug: "filtered-one", search_query: {category_ids:[1000,1001]}, version: 1}
+           {id: 1, name: "filtered one", slug: "filtered-one", search_query: {category_ids:[1000,1001]}, sorting_options: {"price,asc" => {title: "Lowest Price", default: true}}, version: 1}
       }
     }
     let(:filtered_two) {
@@ -26,7 +26,7 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
 
     it "returns errors when required fields are not passed" do
       post :index, dynamic_category: {name: "super name"}
-      response.body.should =~ /Missing required attributes, required: id, name, slug, search_query, version, passed/
+      response.body.should =~ /Missing required attributes, required: id, name, slug, search_query, sorting_options, version, passed/
     end
 
     context "indexes new dynamic category" do

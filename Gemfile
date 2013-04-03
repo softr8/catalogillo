@@ -16,7 +16,7 @@ gem "jquery-rails"
 # To use debugger
 # gem 'debugger'
 
-group :local_test do
+if ENV['SOFTR8']
   gem "ZenTest"
   gem "autotest-fsevent"
   gem "autotest-growl"

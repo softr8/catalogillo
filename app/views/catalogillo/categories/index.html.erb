@@ -1,22 +1,32 @@
-<div class="container" id="products-container">
-  <div class="row">
-    <h2><%= @category.name %></h2>
+<% cache("content-category-#{@category.id}-#{@current_page}-#{@per_page}-#{@sort_by.join}-#{@category.version}") do %>
+  <div class="container" id="products-container">
     <div class="row">
-      <div class="span3">
-        <%= page_entries_info(@hits, entry_name: 'product') %>
-      </div><div class="span9">
-        <%= paginate @hits %>
+      <h2><%= @category.name %></h2>
+
+      <div class="row">
+        <div class="span3">
+          <%= page_entries_info(@hits, entry_name: 'product') %>
+        </div>
+        <div class="span9">
+          <%= paginate @hits %>
+        </div>
       </div>
-    </div>
-    <%= content_tag(Catalogillo::Config.default_products_container[:tag], class: Catalogillo::Config.default_products_container[:class]) do %>
-      <% @hits.each do |hit| %>
-        <%= render partial: 'product', locals: {hit: hit} %>
+      <div class="row">
+        <div class="span12">
+          Sort By
+          <%= select_tag :sort_by, options_for_select(available_sorting_options(@category.available_sorting_options), @sort_by) %>
+        </div>
+      </div>
+      <%= content_tag(Catalogillo::Config.default_products_container[:tag], class: Catalogillo::Config.default_products_container[:class]) do %>
+        <% @hits.each do |hit| %>
+          <%= render partial: 'product', locals: {hit: hit} %>
+        <% end %>
       <% end %>
-    <% end %>
-    <div class="row">
-      <div class="span12">
-        <%= paginate @hits %>
+      <div class="row">
+        <div class="span12">
+          <%= paginate @hits %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>

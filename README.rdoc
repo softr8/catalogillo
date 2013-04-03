@@ -14,13 +14,13 @@ Mount this engine in your rails app, customize your layout and index products an
   Product
     id: Product unique identifier
     name: Product Name
-    category_ids: Category Ids
+    category_ids: Category Ids (Array)
     price: Product Price
     sale_price: Product Sale Price
     on_sale: Product Sale Price active?
     version: Current Product Version, expires cache when changed
-    images: Product images
-    high_res_images: Product images
+    images: Product images (Array)
+    high_res_images: Product images (Array)
     fulltext_keywords: Product description to be used in searches
     pdp_url: Product detail page url
 
@@ -28,7 +28,8 @@ Mount this engine in your rails app, customize your layout and index products an
     id: Dynamic Category unique identifier
     name: Dynamic Category name
     slug: Dynamic Category slug's name
-    search_query: Search Query
+    search_query: Search Query (Hash)
+    sorting_options: Sorting options to display (Hash)
     version: Current Dynamic Category Version, expires cache when changed
 
 == Indexing new products
@@ -100,13 +101,12 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 
 == TODO
 * Add security to API endpoints
-* Sorting options per dynamic category
-* More Caching layers
+* Even more caching layers
 * Lazy loading Product Images
 
 
 == About the author
-[Crowd Interactive](http://www.crowdint.com) is a leading Ruby and Rails
+I work at [Crowd Interactive](http://www.crowdint.com), it is a leading Ruby and Rails
 consultancy firm based in Mexico currently doing business with startups in the
 United States. We specialize in building and growing Rails applications, by increasing
 your IT crew onsite or offsite. We pick our projects carefully, as we only work

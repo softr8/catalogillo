@@ -27,6 +27,8 @@ module Catalogillo
       Collection.new(search do
         paginate page: options[:page] || Catalogillo::Config.page, per_page: (options[:per_page] || Catalogillo::Config.per_page)
 
+        order_by(*options[:sort_by]) if options[:sort_by]
+
         keywords keyword unless keyword.blank?
 
         filters.each_pair do |key, value|

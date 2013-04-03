@@ -5,7 +5,7 @@ module Catalogillo
     attr_accessor :per_page, :page, :default_image,
                   :default_product_tile, :default_products_container
     def initialize
-      @per_page = 50
+      @per_page = 48
       @page = 1
       @default_image = "catalogillo/no_image.jpg"
       @default_product_tile = {tag: "li", class: "span2"}
