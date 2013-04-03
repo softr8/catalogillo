@@ -95,8 +95,7 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 * More Caching layers
 
 
-# About the author
-
+== About the author
 [Crowd Interactive](http://www.crowdint.com) is a leading Ruby and Rails
 consultancy firm based in Mexico currently doing business with startups in the
 United States. We specialize in building and growing Rails applications, by increasing
