@@ -21,5 +21,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'bootstrap-sass', '>= 2.3'
   s.add_dependency "jquery-rails"
   s.add_dependency "versionist", '>= 1.0'
+  s.add_dependency "kaminari"
   s.add_development_dependency 'rspec-rails'
 end

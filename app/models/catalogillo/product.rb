@@ -9,7 +9,7 @@ module Catalogillo
               {name: "category_ids", type: "Integer-Array", required: true, description: "Category Ids"},
               {name: "price", type: "float", required: true, description: "Product Price"},
               {name: "sale_price", type: "float", required: false, description: "Product Sale Price"},
-              {name: "on_sale", type: "Boolean", required: false, description: "Product Sale Price active?"},
+              {name: "on_sale", type: "Boolean", required: true, description: "Product Sale Price active?"},
               {name: "version", type: "integer", required: true, description: "Current Product Version, expires cache when changed"},
               {name: "images", type: "String-Array", required: false, description: "Product images"},
               {name: "high_res_images", type: "String-Array", required: false, description: "Product images"},
@@ -24,5 +24,6 @@ module Catalogillo
     def first_thumbnail_image
       images.try(:first).blank? ? Catalogillo::Config.default_image : images.try(:first)
     end
+
   end
 end

@@ -1,0 +1,21 @@
+.sale-price-on-sale {
+  color: red;
+}
+
+.price-on-sale {
+  text-decoration: line-through;
+}
+
+#products-container {
+  a{
+    color: black;
+  }
+  a:hover{
+    text-decoration: none;
+  }
+}
+
+.pagination {
+  margin: 0 0;
+  float: right;
+}

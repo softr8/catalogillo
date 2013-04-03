@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Catalogillo::Product do
   let(:valid_params) {
-    {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56}
+    {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56, on_sale: false}
   }
   before :all do
     10.times { |index| Sunspot.index Catalogillo::Product.new valid_params.merge(id: index, name: "Product #{index}", category_ids: [1000 + index, 1000 - index], fulltext_keywords: "keyword#{index}") }

@@ -51,11 +51,17 @@ module Catalogillo
       include Enumerable
       extend Forwardable
       attr_reader :collection
+      def_delegators :collection, :offset, :length, :total_entries, :total_pages, :current_page, :previous_page, :next_page, :empty?, :size
 
       def_delegators :to_ary, :each
 
       def initialize search
         @collection = search.hits
+      end
+
+      #helper needed by Kaminari
+      def limit_value
+        length
       end
 
       def to_ary

@@ -1,10 +1,22 @@
-<div class="container">
+<div class="container" id="products-container">
   <div class="row">
     <h2><%= @category.name %></h2>
-    <ul class="unstyled">
+    <div class="row">
+      <div class="span3">
+        <%= page_entries_info(@hits, entry_name: 'product') %>
+      </div><div class="span9">
+        <%= paginate @hits %>
+      </div>
+    </div>
+    <%= content_tag(Catalogillo::Config.default_products_container[:tag], class: Catalogillo::Config.default_products_container[:class]) do %>
       <% @hits.each do |hit| %>
         <%= render partial: 'product', locals: {hit: hit} %>
       <% end %>
-    </ul>
+    <% end %>
+    <div class="row">
+      <div class="span12">
+        <%= paginate @hits %>
+      </div>
+    </div>
   </div>
 </div>

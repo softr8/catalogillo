@@ -3,6 +3,8 @@ gem 'catalogillo', path: '../../'
 
 gem 'bootstrap-sass', '>= 2.3'
 
+gem 'kaminari'
+
 gem "jquery-rails"
 
 gem "sunspot_rails", ">= 2.0"

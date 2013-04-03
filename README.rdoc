@@ -56,7 +56,9 @@ remember that category_ids is a multi-value field and solr filters the correct d
 multiple categories to a single product. More info here in [Sunspot](https://github.com/sunspot/sunspot/wiki/Scoping-by-attribute-fields) documentation.
 
 == Usage
-Install this gem and mount the engine in your desired namespace
+Install this gem into a rails application and do not use active record and mount the engine in your desired namespace
+
+  $ rails new supper_app --skip-active-record --skip-test-unit
 
   #Gemfile
   gem 'catalogillo', github: '/softr8/catalogillo'
@@ -65,7 +67,10 @@ Install this gem and mount the engine in your desired namespace
   mount Catalogillo::Engine => "/store"
 
 Personalize your application layout and that's it! You can build some jsonp calls to your main ecomm to show shopping cart
-status in the header, or hook with unobstrusive javascript a quicklook.
+status in the header, or hook with unobstrusive javascript to build a quicklook.
+
+For some reason I haven't had time to look, you need to include in your gemfile kaminari gem.
+
 
 == Config
 You can control global configurations
@@ -74,6 +79,8 @@ You can control global configurations
     config.per_page = 10
     config.page = 1
     config.default_image = "http://cdn.super-domain.com/images/no-image.png"
+    config.default_product_tile = {tag: "li", class: ""}
+    config.default_products_container = {tag: "lu", class: "unstyled"}
   end
 
 
@@ -91,7 +98,6 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 == TODO
 * Add security to API endpoints
 * Sorting options per dynamic category
-* Pagination
 * More Caching layers
 
 

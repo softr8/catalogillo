@@ -1,10 +1,10 @@
 <% cache("catalog-product-#{hit.id}-#{hit.version}") do %>
-  <%= content_tag('li', "catalog-product-{hit.id}", class: 'span2') do
+  <%= content_tag(Catalogillo::Config.default_product_tile[:tag], class: Catalogillo::Config.default_product_tile[:class], id: "catalog-product-#{hit.id}") do
     link_to hit.pdp_url do %>
       <%= content_tag('div', image_tag(hit.first_thumbnail_image)) %>
       <%= content_tag('div', hit.name, id: "catalog-product-name-#{hit.id}") %>
-      <%= content_tag('small', "$#{hit.price}", id: "catalog-product-price-#{hit.id}") %>
-      <%= content_tag('small', "$#{hit.sale_price}", class: 'on-sale') if hit.on_sale %>
+      <%= content_tag('small', "$#{hit.price}", id: "catalog-product-price-#{hit.id}", class: hit.on_sale ? "price-on-sale" : "") %>
+      <%= content_tag('small', "$#{hit.sale_price}", class: 'sale-price-on-sale') if hit.on_sale %>
     <% end
   end
 end %>
