@@ -1,0 +1,6 @@
+language: ruby
+rvm:
+  - 1.9.3
+before_install:
+  - gem update --system
+before_script: curl https://raw.github.com/moliware/travis-solr/master/travis-solr.sh | SOLR_VERSION=3.6.1 bash
