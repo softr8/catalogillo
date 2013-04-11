@@ -19,7 +19,7 @@ describe Catalogillo::CategoriesController do
       product.fulltext_keywords = "product1"
       product.name = "Product 1"
       Sunspot.index! product
-      get :search, keyword: 'product1'
+      get :search, keyword: 'product1 '
       assigns(:hits).first.name.should == "Product 1"
     end
   end

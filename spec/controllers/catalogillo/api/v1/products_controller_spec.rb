@@ -6,8 +6,8 @@ describe Catalogillo::Api::V1::ProductsController do
     let(:valid_params) {
       {
           products: [
-              {id: 1, name: 'Pechan 1', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-1", price: 45.65, on_sale: false},
-              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-2", price: 34.34, on_sale: false}
+              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-2", price: 45.65, on_sale: false, status: 'active', launch_date: 1.day.ago},
+              {id: 3, name: 'Pechan 3', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-3", price: 34.34, on_sale: false, status: 'active', launch_date: 1.day.ago}
           ]
       }
     }
@@ -17,25 +17,25 @@ describe Catalogillo::Api::V1::ProductsController do
     end
 
     it "returns unprocessable entity if solr commit fails " do
-      post :index, {products: [{id: 1}]}
+      post :index, {products: [{id: 2}]}
       response.code.should eql("422")
     end
 
     it "returns errors when required fields are not passed" do
       post :index, {products: [{id: 1}]}
-      response.body.should =~ /Missing required attributes, required: id, name, category_ids, price, on_sale, version/
+      response.body.should =~ /Missing required attributes, required: id, name, category_ids, price, on_sale, version, status/
     end
 
     context "indexes new products" do
-      subject { Catalogillo::Product.filter(filters: {id: 1}).first }
+      subject { Catalogillo::Product.filter(filters: {id: 2}).first }
       before do
         post :index, valid_params
       end
 
-      its(:name) { should == "Pechan 1" }
+      its(:name) { should == "Pechan 2" }
       its(:version) { should == 1 }
       its(:category_ids) { should == [1000] }
-      its(:pdp_url) { should == "http://superhost.com/products/pechan-1" }
+      its(:pdp_url) { should == "http://superhost.com/products/pechan-2" }
     end
   end
 

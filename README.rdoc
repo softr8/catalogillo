@@ -22,6 +22,10 @@ Mount this engine in your rails app, customize your layout and index products an
     images: Product images (Array)
     high_res_images: Product images (Array)
     fulltext_keywords: Product description to be used in searches
+    status: Product Status
+    description: Product short description
+    long_description: Product long description
+    launch_date: Product available date
     pdp_url: Product detail page url
 
   Dynamic Category
@@ -41,17 +45,20 @@ You can send updates to this rails app from your main ecomm app via API, the end
 
 
 == Categories
-Creating categories with dynamic content is as easy as use solr query language, it's stored in json format then decoded and
+Creating categories with dynamic content(faceted) is as easy as use solr query language, it's stored in json format then decoded and
 catalogillo applies the filters to get the desired results.
 Examples:
 
   {
     category_ids: {between: 1006..1007},
-    name: {starting_with: "sale"}
+    name: {starting_with: "sale"},
+    state: {equal_to: 'active'}
   }
 
   {
-    price: {greater_than: 50}
+    price: {greater_than: 50},
+    on_sale: {equal_to: true},
+    state: {equal_to: 'active'}
   }
 
 
@@ -80,11 +87,21 @@ For some reason I haven't had time to look, you need to include in your gemfile 
 You can control global configurations
 
   Catalogillo.config do |config|
-    config.per_page = 10
+    config.per_page = 48
     config.page = 1
     config.default_image = "http://cdn.super-domain.com/images/no-image.png"
     config.default_product_tile = {tag: "li", class: ""}
     config.default_products_container = {tag: "lu", class: "unstyled"}
+
+    #How much the cache is valid
+    config.cache_expires_in = 5.minutes
+
+    #If you need custom fields in product model, just add them here, example:
+    # {name: "my_custom_field", type: "String", required: true, description: "Product field I needed"}
+    config.products_extra_fields = []
+
+    #Default filters applied everywhere
+    config.default_search_filters = { status: {equal_to: 'active'}, launch_date: {less_than: "FN_TIME_ZONE_NOW" } }
   end
 
 
@@ -103,10 +120,33 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 * Add security to API endpoints
 * Even more caching layers
 * Lazy loading Product Images
+* More Functions
 
+
+== Benchmarks
+I did some preliminary benchmark tests and I got this using my MBP(mid 2012 retina display):
+
+  $ unicorn_rails -c config/unicorn.rb -E production -D #starts 8 workers
+
+  $ ab -c 8 -n 1000 http://127.0.0.1:8080/store/all
+  This is ApacheBench, Version 2.3 <$Revision: 655654 $>
+
+  Concurrency Level:      8
+  Time taken for tests:   3.699 seconds
+  Complete requests:      1000
+  Failed requests:        0
+  Write errors:           0
+  Total transferred:      18506000 bytes
+  HTML transferred:       17897000 bytes
+  Requests per second:    270.34 [#/sec] (mean)
+  Time per request:       29.593 [ms] (mean)
+  Time per request:       3.699 [ms] (mean, across all concurrent requests)
+  Transfer rate:          4885.62 [Kbytes/sec] received
+
+It used memcached cache store, solr storing 10k products and 1 category
 
 == About the author
-I work at [Crowd Interactive](http://www.crowdint.com), it is a leading Ruby and Rails
+I work at {Crowd Interactive}[http://www.crowdint.com], it is a leading Ruby and Rails
 consultancy firm based in Mexico currently doing business with startups in the
 United States. We specialize in building and growing Rails applications, by increasing
 your IT crew onsite or offsite. We pick our projects carefully, as we only work

@@ -22,5 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "jquery-rails"
   s.add_dependency "versionist", '>= 1.0'
   s.add_dependency "kaminari"
+  s.add_dependency "dalli"
+  s.add_dependency "memcache-client"
   s.add_development_dependency 'rspec-rails'
 end

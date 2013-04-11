@@ -5,6 +5,12 @@ development:
     log_level: INFO
     auto_commit_after_request: false
 
+production:
+  solr:
+    hostname: localhost
+    port: 8983
+    auto_commit_after_request: false
+
 test:
   solr:
     hostname: localhost

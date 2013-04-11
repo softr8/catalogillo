@@ -1,6 +1,7 @@
 module Catalogillo
   class ModelBase
-    class Error < Exception ; end
+    class Error < Exception;
+    end
 
     def initialize options
       unless (options.keys.map(&:to_s) & required_fields).size >= required_fields.size
@@ -35,7 +36,15 @@ module Catalogillo
           if value.is_a?(Hash)
             any_of do
               value.keys.each do |method|
-                with(key).send(method, value[method])
+                if value[method].is_a?(String) && value[method].starts_with?("FN_")
+                  value = case value[method]
+                            when "FN_TIME_ZONE_NOW" then
+                              Time.zone.now
+                          end
+                  with(key).send(method, value)
+                else
+                  with(key).send(method, value[method])
+                end
               end
             end
           else
@@ -70,7 +79,7 @@ module Catalogillo
         @result_hit_collection ||= @collection.map do |hit|
           klass = hit.class_name.constantize
           attributes = {}
-          klass.metadata[:fields].collect {|field| field[:name]}.each do |field_name|
+          klass.metadata[:fields].collect { |field| field[:name] }.each do |field_name|
             attributes[field_name] = hit.stored(field_name)
           end
           klass.new(attributes)
@@ -82,11 +91,12 @@ module Catalogillo
     private
 
     def required_fields
-      @required_fields ||= singleton_class.metadata[:fields].select {|field| field[:required] }.collect {|field| field[:name]}
+      @required_fields ||= singleton_class.metadata[:fields].select { |field| field[:required] }.collect { |field| field[:name] }
     end
 
     def fields
-      @fields ||= singleton_class.metadata[:fields].collect {|field| field[:name]}
+      extra_fields = Catalogillo::Config.send("#{self.class.to_s.demodulize.downcase.pluralize}_extra_fields") rescue []
+      @fields ||= (singleton_class.metadata[:fields] + extra_fields).collect { |field| field[:name] }
     end
   end
 end

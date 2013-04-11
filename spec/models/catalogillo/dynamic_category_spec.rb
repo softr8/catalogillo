@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Catalogillo::DynamicCategory do
   let(:valid_params) {
     {
-      id: 1,
+      id: 2,
       name: 'dynamic category',
       slug: 'dynamic-category',
       search_query: ActiveSupport::JSON.encode({category_ids: {less_than: 1007, greater_than: 1007}}),

@@ -5,7 +5,8 @@ module Catalogillo
 
         def index
           params[:products].each do |p|
-            Sunspot.index Product.new p
+            product = Product.new p
+            Sunspot.index product
           end
           head Sunspot.commit ? :ok : :unprocessable_entity
         end

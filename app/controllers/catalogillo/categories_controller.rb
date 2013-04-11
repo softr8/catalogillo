@@ -6,6 +6,7 @@ module Catalogillo
       @sort_by = @category.sort_by(params[:sort_by])
       @current_page = params[:page] || Catalogillo::Config.page
       @per_page = params[:per_page] || Catalogillo::Config.per_page
+
       unless Rails.cache.exist?("views/content-category-#{@category.id}-#{@current_page}-#{@per_page}-#{@sort_by.join}-#{@category.version}")
         options = {sort_by: @sort_by}
         options.merge!(page: params[:page]) if params[:page]
@@ -15,7 +16,11 @@ module Catalogillo
     end
 
     def search
-      @hits = Catalogillo::Product.filter(filters: {keywords: params[:keyword]})
+      @category = Catalogillo::Config.search_category
+      @sort_by = @category.sort_by(params[:sort_by])
+
+      @hits = Catalogillo::Product.filter(filters: {keywords: params[:keyword]}.merge(@category.query))
+      render :index
     end
 
   end

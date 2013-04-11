@@ -14,6 +14,10 @@ module Catalogillo
               {name: "images", type: "String-Array", required: false, description: "Product images"},
               {name: "high_res_images", type: "String-Array", required: false, description: "Product images"},
               {name: "fulltext_keywords", type: "Text", required: false, description: "Product description to be used in searches"},
+              {name: "status", type: "String", required: true, description: "Product state"},
+              {name: "description", type: "Text", required: false, description: "Product description"},
+              {name: "long_description", type: "Text", required: false, description: "Product long description"},
+              {name: "launch_date", type: "Time", required: true, description: "Product launch date"},
               {name: "pdp_url", type: "String", required: false, description: "Product detail page url"}
           ]
       }

@@ -6,7 +6,9 @@ puts "Creating Products"
                                     name: "Product #{index}",
                                     category_ids: [1000 + index, 1000 - index],
                                     price: 30.45 + index,
-                                    fulltext_keywords: "keyword#{index}"})
+                                    fulltext_keywords: "keyword#{index}",
+                                    status: 'active',
+                                    launch_date: index.days.ago})
   Sunspot.index Catalogillo::Product.new attributes
 end
 

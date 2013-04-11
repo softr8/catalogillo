@@ -1,15 +1,14 @@
 require 'spec_helper'
 
 describe Catalogillo::Product do
-  let(:valid_params) {
-    {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56, on_sale: false}
-  }
-  before :all do
-    10.times { |index| Sunspot.index Catalogillo::Product.new valid_params.merge(id: index, name: "Product #{index}", category_ids: [1000 + index, 1000 - index], fulltext_keywords: "keyword#{index}") }
-    Sunspot.commit
-  end
-
   context ".filter" do
+    let(:valid_params) {
+      {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56, on_sale: false, status: 'active', launch_date: 1.day.ago}
+    }
+    before :all do
+      10.times { |index| Sunspot.index Catalogillo::Product.new valid_params.merge(id: index, name: "Product #{index}", category_ids: [1000 + index, 1000 - index], fulltext_keywords: "keyword#{index}") }
+      Sunspot.commit
+    end
     describe "with id" do
       it "filters by specific id" do
         product = Catalogillo::Product.filter(filters: {id: 1}).first
@@ -48,6 +47,11 @@ describe Catalogillo::Product do
       end
     end
 
+    describe "lambda conditions" do
+      products = Catalogillo::Product.filter(filters: {launch_date: {less_than: 'FN_TIME_ZONE_NOW'}})
+      products.map(&:name).should_not == "Product 7"
+    end
+
     describe "pagination" do
       it "paginates results" do
         products = Catalogillo::Product.filter(per_page: 3)
@@ -59,6 +63,43 @@ describe Catalogillo::Product do
       it "filters based on keywords" do
         products = Catalogillo::Product.filter(filters: {keywords: "keyword1"})
         products.first.name.should == "Product 1"
+      end
+    end
+  end
+
+  context "extra fields" do
+    context "invalid params" do
+      it "raises an exception" do
+        expect do
+          Catalogillo::Config.products_extra_fields = [
+              {"wrong" => "key"}
+          ]
+        end.to raise_exception(Catalogillo::ConfigurationException)
+      end
+    end
+
+    context "Valid params" do
+      before :all do
+        Catalogillo::Config.products_extra_fields = [
+            {name: "custom_field", type: "String", required: false, description: "Extra custom field"}
+        ]
+      end
+
+      it "creates a new product including custom_field" do
+        valid_params = {
+            id: 9876,
+            name: "Custom Product",
+            category_ids: [1000],
+            version: 1,
+            pdp_url: 'url',
+            price: 12.34,
+            on_sale: false,
+            custom_field: "custom field",
+            status: 'active',
+            launch_date: 1.day.ago
+        }
+        product = Catalogillo::Product.new valid_params
+        product.custom_field.should == "custom field"
       end
     end
   end
