@@ -130,6 +130,7 @@ GEM
     sunspot_rails (2.0.0)
       nokogiri
       sunspot (= 2.0.0)
+    sunspot_solr (2.0.0)
     sys-uname (0.9.1)
       ffi (>= 1.0.0)
     thor (0.17.0)
@@ -154,3 +155,4 @@ DEPENDENCIES
   catalogillo!
   jquery-rails
   rspec-rails
+  sunspot_solr

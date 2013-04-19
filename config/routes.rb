@@ -12,6 +12,6 @@ Catalogillo::Engine.routes.draw do
 
   match "/api/v1/dynamic_categories/index" => 'api/v1/dynamic_categories#index', via: :post
 
-  match "/:slug" => 'categories#index'
-  match "/search/:keyword" => 'categories#search'
+  match "/search/(:keyword)" => 'categories#search', via: :get, as: 'catalogillo_search'
+  match "/:slug" => 'categories#index', via: :get, as: 'catalogillo_index'
 end

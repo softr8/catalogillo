@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe Catalogillo::CategoriesController do
+
   context "#index" do
     it "returns the true" do
       get :index, slug: "dummy"
@@ -17,10 +18,14 @@ describe Catalogillo::CategoriesController do
     it "filters by keywords" do
       product = Catalogillo::Product.filter(filters: {}).first
       product.fulltext_keywords = "product1"
-      product.name = "Product 1"
       Sunspot.index! product
-      get :search, keyword: 'product1 '
-      assigns(:hits).first.name.should == "Product 1"
+      get :search, keyword: 'product1'
+      assigns(:hits).first.name.should == product.name
+    end
+
+    it "shows no results when keyword is empty" do
+      get :search
+      assigns(:hits).count.should == 0
     end
   end
 end

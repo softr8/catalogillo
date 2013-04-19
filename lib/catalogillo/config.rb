@@ -31,15 +31,18 @@ module Catalogillo
     end
 
     def search_category
-      return @search_category if @search_category rescue false
-      valid_params = {id: 1,
-                      name: "Search Results",
-                      slug: "search",
-                      search_query: ActiveSupport::JSON.encode(@default_search_filters),
-                      sorting_options: ActiveSupport::JSON.encode({"price,asc" => {title: "Lowest Price", default: true}}),
-                      version: 1}
-      @search_category = Catalogillo::DynamicCategory.new valid_params
-      Sunspot.index @search_category
+      @search_category ||= Catalogillo::DynamicCategory.filter(filters: { id: 1}).try(:first)
+      unless @search_category
+        valid_params = {id: 1,
+                        name: "Search Results",
+                        slug: "search",
+                        search_query: ActiveSupport::JSON.encode(@default_search_filters),
+                        sorting_options: ActiveSupport::JSON.encode({"price,asc" => {title: "Lowest Price", default: true}}),
+                        version: 1}
+
+        @search_category = Catalogillo::DynamicCategory.new valid_params
+        Sunspot.index @search_category
+      end
       @search_category
     end
 

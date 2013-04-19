@@ -1,5 +1,4 @@
-<%
-   cache("content-category-#{@category.id}-#{@current_page}-#{@per_page}-#{@sort_by.join}-#{@category.version}", expires_in: Catalogillo::Config.cache_expires_in) do %>
+<% cache("content-category-#{@category.id}-#{@current_page}-#{@per_page}-#{@sort_by.join}-#{@category.version}", expires_in: Catalogillo::Config.cache_expires_in) do %>
   <div class="container" id="products-container">
     <div class="row">
       <h2><%= @category.name %></h2>

@@ -104,6 +104,14 @@ You can control global configurations
     config.default_search_filters = { status: {equal_to: 'active'}, launch_date: {less_than: "FN_TIME_ZONE_NOW" } }
   end
 
+== Implementing searching functionality
+Put a piece of code like this one anywhere in your layout or partial to get the search input, it will automatically work
+
+  <%= form_tag(catalogillo_search_path, method: :get) do%>
+    <%= text_field_tag :keyword %>
+    <input type="submit" value="Submit">
+  <% end %>
+
 
 == Demo
 If you want to have a look at it, you can launch the dummy app from spec's folder

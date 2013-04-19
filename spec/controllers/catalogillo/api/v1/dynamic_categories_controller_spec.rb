@@ -5,7 +5,7 @@ describe Catalogillo::Api::V1::DynamicCategoriesController do
   context "POST #index" do
     let(:filtered_one) {
       {dynamic_category:
-           {id: 1, name: "filtered one", slug: "filtered-one", search_query: {category_ids:[1000,1001]}, sorting_options: {"price,asc" => {title: "Lowest Price", default: true}}, version: 1}
+           {id: 3, name: "filtered one", slug: "filtered-one", search_query: {category_ids:[1000,1001]}, sorting_options: {"price,asc" => {title: "Lowest Price", default: true}}, version: 1}
       }
     }
     let(:filtered_two) {
