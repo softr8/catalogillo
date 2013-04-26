@@ -20,6 +20,7 @@ module Catalogillo
     def query
       @query ||= ActiveSupport::JSON.decode(search_query)
     end
+
   end
 end
 

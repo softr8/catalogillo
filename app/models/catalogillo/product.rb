@@ -29,5 +29,17 @@ module Catalogillo
       images.try(:first).blank? ? Catalogillo::Config.default_image : images.try(:first)
     end
 
+
+    private
+    def after_initialize
+      Catalogillo::Category.filter(filters: {id: category_ids}).each do |category|
+        category.touch
+      end
+
+      Catalogillo::DynamicCategory.filter(filters: {}).each do |category|
+        category.touch unless Catalogillo::Product.filter(filters: category.query.merge(id: id)).empty?
+      end
+      Sunspot.commit
+    end
   end
 end

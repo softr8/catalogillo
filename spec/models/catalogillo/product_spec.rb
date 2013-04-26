@@ -112,4 +112,36 @@ describe Catalogillo::Product do
       end
     end
   end
+
+  context "#after_initialize" do
+    let(:product_params) do { version: 1,
+                      pdp_url: "http://superhost.com/products/cache-1",
+                      price: 34.56,
+                      on_sale: false,
+                      status: 'active',
+                      launch_date: 1.day.ago,
+                      id: 5678,
+                      name: "Product Cache",
+                      category_ids: [1000],
+                      fulltext_keywords: ""
+      }
+    end
+
+    context "cache" do
+      let(:category) { double(Catalogillo::Category, {touch: true})}
+      let(:dynamic_category) { double(Catalogillo::DynamicCategory, {touch: true, query: {}})}
+      it "updates category version" do
+        Catalogillo::Category.stub(:filter).with(any_args).and_return([category])
+        category.should_receive(:touch)
+        Catalogillo::Product.new product_params
+      end
+
+      it "updates dyamic category version" do
+        Catalogillo::DynamicCategory.stub(:filter).with(any_args).and_return([dynamic_category])
+        Catalogillo::Product.stub(:filter).with(any_args).and_return([1])
+        dynamic_category.should_receive(:touch)
+        Catalogillo::Product.new product_params
+      end
+    end
+  end
 end

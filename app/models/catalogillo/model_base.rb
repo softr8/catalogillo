@@ -18,6 +18,8 @@ module Catalogillo
       options.each do |key, value|
         instance_variable_set("@#{key}", value)
       end
+
+      after_initialize if respond_to?(:after_initialize, true)
     end
 
     include Sunspot::CatalogilloSolr
@@ -113,6 +115,11 @@ module Catalogillo
 
     def default_sorting
       @default_sorting ||= available_sorting_options.select {|element, value| value["default"] == true }.keys.first rescue 'name'
+    end
+
+    def touch
+      version += 1
+      index
     end
 
     private
