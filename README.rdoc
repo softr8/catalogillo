@@ -129,6 +129,7 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 * Even more caching layers
 * Lazy loading Product Images
 * More Functions
+* Add support for scarcity (units on hand available)
 
 
 == Benchmarks

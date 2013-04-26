@@ -41,8 +41,8 @@ module Catalogillo
       end
     end
 
-    def available_sorting_options options
-      options.inject({}){|final, element| final[element.second["title"]] = element.first ; final}
+    def available_sorting_options options = {}
+      (options || {}).inject({}){|final, element| final[element.second["title"]] = element.first ; final}
     end
 
   end

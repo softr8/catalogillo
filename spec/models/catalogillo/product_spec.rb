@@ -24,9 +24,11 @@ describe Catalogillo::Product do
     end
 
     describe "category id greater than" do
-      it "finds products with category_id 1009" do
-        product = Catalogillo::Product.filter(filters: { category_ids: {greater_than_or_equal_to: 1009}}).first
-        product.name.should == "Product 9"
+      it "finds products with price greater or equal than" do
+        products = Catalogillo::Product.filter(filters: { price: {greater_than_or_equal_to: 50}})
+        products.map(&:price).each do |price|
+          price.should >= 50
+        end
       end
     end
 
@@ -34,6 +36,13 @@ describe Catalogillo::Product do
       it "filters 1006 and 1007 categories ids" do
         products = Catalogillo::Product.filter(filters: {category_ids: {between: [1006, 1007]}})
         products.map(&:name).should == ["Product 6", "Product 7"]
+      end
+    end
+
+    describe "category ids as array" do
+      it "filters by hierachical data" do
+        products = Catalogillo::Product.filter(filters: {category_ids: {equal_to: [1005, 1007]}})
+        products.map(&:name).should == ["Product 5", "Product 7"]
       end
     end
 

@@ -34,7 +34,7 @@ module Catalogillo
 
         filters.each_pair do |key, value|
           if value.is_a?(Hash)
-            any_of do
+            all_of do
               value.keys.each do |method|
                 if value[method].is_a?(String) && value[method].starts_with?("FN_")
                   value = case value[method]
@@ -43,7 +43,20 @@ module Catalogillo
                           end
                   with(key).send(method, value)
                 else
-                  with(key).send(method, value[method])
+                  case method
+                    when :equal_to then
+                      if value[method].is_a?(Array)
+                        any_of do
+                          value[method].each do |index|
+                            with(key).send(method, index)
+                          end
+                        end
+                      else
+                        with(key).send(method, value)
+                      end
+                    else
+                      with(key).send(method, value[method])
+                  end
                 end
               end
             end
@@ -88,6 +101,20 @@ module Catalogillo
 
     end
 
+    def sort_by param = ""
+      sorting_option = available_sorting_options.try(:has_key?, param) ? param : default_sorting
+      field, by = sorting_option.split(',')
+      [field, (by || "asc").to_sym]
+    end
+
+    def available_sorting_options
+      @available_sorting_options ||= ActiveSupport::JSON.decode(sorting_options)
+    end
+
+    def default_sorting
+      @default_sorting ||= available_sorting_options.select {|element, value| value["default"] == true }.keys.first rescue 'name'
+    end
+
     private
 
     def required_fields
@@ -98,5 +125,6 @@ module Catalogillo
       extra_fields = Catalogillo::Config.send("#{self.class.to_s.demodulize.downcase.pluralize}_extra_fields") rescue []
       @fields ||= (singleton_class.metadata[:fields] + extra_fields).collect { |field| field[:name] }
     end
+
   end
 end

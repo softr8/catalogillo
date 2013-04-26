@@ -17,6 +17,7 @@ gem "jquery-rails"
 # gem 'debugger'
 
 if ENV['SOFTR8']
+  gem 'pry'
   gem "ZenTest"
   gem "autotest-fsevent"
   gem "autotest-growl"

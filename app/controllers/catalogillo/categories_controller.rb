@@ -3,8 +3,9 @@ module Catalogillo
     before_filter :pagination_variables
 
     def index
-      @category = Catalogillo::DynamicCategory.filter(filters: {slug: {starting_with: params[:slug]}}).first
+      @category = Catalogillo::DynamicCategory.filter(filters: {slug: {starting_with: params[:slug]}}).first || Catalogillo::Category.filter(filters: {slug: {starting_with: params[:slug]}}).first
       raise Catalogillo::RecordNotFound.new("Dynamic Category not found using slug: #{params[:slug]}") if @category.nil?
+
       @sort_by = @category.sort_by(params[:sort_by])
 
       unless Rails.cache.exist?("views/content-category-#{@category.id}-#{@current_page}-#{@per_page}-#{@sort_by.join}-#{@category.version}")

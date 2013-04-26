@@ -20,7 +20,7 @@ describe Catalogillo::CategoriesController do
       product.fulltext_keywords = "product1"
       Sunspot.index! product
       get :search, keyword: 'product1'
-      assigns(:hits).first.name.should == product.name
+      assigns(:hits).map(&:name).should include(product.name)
     end
 
     it "shows no results when keyword is empty" do

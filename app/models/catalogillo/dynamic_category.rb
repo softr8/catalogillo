@@ -20,20 +20,6 @@ module Catalogillo
     def query
       @query ||= ActiveSupport::JSON.decode(search_query)
     end
-
-    def sort_by param = ""
-      sorting_option = available_sorting_options.has_key?(param) ? param : default_sorting
-      field, by = sorting_option.split(',')
-      [field, (by || "asc").to_sym]
-    end
-
-    def available_sorting_options
-      @available_sorting_options ||= ActiveSupport::JSON.decode(sorting_options)
-    end
-
-    def default_sorting
-      @default_sorting ||= available_sorting_options.select {|element, value| value["default"] == true }.keys.first
-    end
   end
 end
 
