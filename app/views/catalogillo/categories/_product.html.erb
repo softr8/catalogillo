@@ -1,10 +1,15 @@
-<% cache("catalog-product-#{hit.id}-#{hit.version}") do %>
-  <%= content_tag(Catalogillo::Config.default_product_tile[:tag], class: Catalogillo::Config.default_product_tile[:class], id: "catalog-product-#{hit.id}") do
-    link_to hit.pdp_url do %>
-      <%= content_tag('div', image_tag(hit.first_thumbnail_image)) %>
+<% cache("catalog-product-#{hit.id}-#{hit.version}", expires_in: Catalogillo::Config.cache_expires_in) do %>
+  <%= content_tag(Catalogillo::Config.default_product_tile[:tag], class: Catalogillo::Config.default_product_tile[:class], id: "catalog-product-#{hit.id}") do %>
+    <%= content_tag('div', image_tag(hit.first_thumbnail_image), id: "product-image", "data-id" => hit.id) %>
+    <%= link_to hit.pdp_url do %>
       <%= content_tag('div', hit.name, id: "catalog-product-name-#{hit.id}") %>
       <%= content_tag('small', "$#{hit.price}", id: "catalog-product-price-#{hit.id}", class: hit.on_sale ? "price-on-sale" : "") %>
       <%= content_tag('small', "$#{hit.sale_price}", class: 'sale-price-on-sale') if hit.on_sale %>
+      <div>
+        <%= content_tag('small', "#{hit.units_on_hand} left!", class: 'low_stock') if hit.on_scarce? %>
+        <%= content_tag('small', "Out of Stock!", class: 'low_stock') if hit.out_of_stock? %>
+        <small>&nbsp;</small>
+      </div>
     <% end
   end
 end %>

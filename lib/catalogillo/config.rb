@@ -9,7 +9,8 @@ module Catalogillo
                   :default_product_tile,
                   :default_products_container,
                   :default_search_category,
-                  :cache_expires_in
+                  :cache_expires_in,
+                  :default_scarcity_level
     attr_reader :products_extra_fields
 
     def initialize
@@ -20,6 +21,7 @@ module Catalogillo
       @default_products_container = {tag: "ul", class: "unstyled"}
       @products_extra_fields = []
       @cache_expires_in = 5.minutes
+      @default_scarcity_level = 5
       @default_search_filters = { status: {equal_to: 'active'}, launch_date: {less_than: "FN_TIME_ZONE_NOW" } }
     end
 

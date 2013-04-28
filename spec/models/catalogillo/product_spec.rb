@@ -3,10 +3,17 @@ require 'spec_helper'
 describe Catalogillo::Product do
   context ".filter" do
     let(:valid_params) {
-      {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56, on_sale: false, status: 'active', launch_date: 1.day.ago}
+      {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56, on_sale: false, status: 'active', launch_date: 1.day.ago, variant_sizes: ['S', 'M', 'L']}
     }
     before :all do
-      10.times { |index| Sunspot.index Catalogillo::Product.new valid_params.merge(id: index, name: "Product #{index}", category_ids: [1000 + index, 1000 - index], fulltext_keywords: "keyword#{index}") }
+      10.times do |index|
+        Sunspot.index Catalogillo::Product.new valid_params.merge(id: index,
+                                                                  name: "Product #{index}",
+                                                                  category_ids: [1000 + index, 1000 - index],
+                                                                  fulltext_keywords: "keyword#{index}",
+                                                                  units_on_hand: index
+                                               )
+      end
       Sunspot.commit
     end
     describe "with id" do
@@ -25,7 +32,7 @@ describe Catalogillo::Product do
 
     describe "category id greater than" do
       it "finds products with price greater or equal than" do
-        products = Catalogillo::Product.filter(filters: { price: {greater_than_or_equal_to: 50}})
+        products = Catalogillo::Product.filter(filters: {price: {greater_than_or_equal_to: 50}})
         products.map(&:price).each do |price|
           price.should >= 50
         end
@@ -48,7 +55,7 @@ describe Catalogillo::Product do
 
     describe "composed filters" do
       before do
-        Sunspot.index! Catalogillo::Product.new valid_params.merge(id: 7, name: "Product 7", category_ids: [1007])
+        Sunspot.index! Catalogillo::Product.new valid_params.merge(id: 7, name: "Product 7", category_ids: [1007], units_on_hand: 10)
       end
       it "filters out based on multiple filters" do
         products = Catalogillo::Product.filter(filters: {category_ids: {less_than: 1007, greater_than: 1007}})
@@ -105,7 +112,9 @@ describe Catalogillo::Product do
             on_sale: false,
             custom_field: "custom field",
             status: 'active',
-            launch_date: 1.day.ago
+            launch_date: 1.day.ago,
+            units_on_hand: 5,
+            variant_sizes: ['XL']
         }
         product = Catalogillo::Product.new valid_params
         product.custom_field.should == "custom field"
@@ -114,22 +123,25 @@ describe Catalogillo::Product do
   end
 
   context "#after_initialize" do
-    let(:product_params) do { version: 1,
-                      pdp_url: "http://superhost.com/products/cache-1",
-                      price: 34.56,
-                      on_sale: false,
-                      status: 'active',
-                      launch_date: 1.day.ago,
-                      id: 5678,
-                      name: "Product Cache",
-                      category_ids: [1000],
-                      fulltext_keywords: ""
+    let(:product_params) do
+      {version: 1,
+       pdp_url: "http://superhost.com/products/cache-1",
+       price: 34.56,
+       on_sale: false,
+       status: 'active',
+       launch_date: 1.day.ago,
+       id: 5678,
+       name: "Product Cache",
+       category_ids: [1000],
+       fulltext_keywords: "",
+       units_on_hand: 5,
+       variant_sizes: ['XL']
       }
     end
 
     context "cache" do
-      let(:category) { double(Catalogillo::Category, {touch: true})}
-      let(:dynamic_category) { double(Catalogillo::DynamicCategory, {touch: true, query: {}})}
+      let(:category) { double(Catalogillo::Category, {touch: true}) }
+      let(:dynamic_category) { double(Catalogillo::DynamicCategory, {touch: true, query: {}}) }
       it "updates category version" do
         Catalogillo::Category.stub(:filter).with(any_args).and_return([category])
         category.should_receive(:touch)

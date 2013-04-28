@@ -6,8 +6,8 @@ describe Catalogillo::Api::V1::ProductsController do
     let(:valid_params) {
       {
           products: [
-              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-2", price: 45.65, on_sale: false, status: 'active', launch_date: 1.day.ago},
-              {id: 3, name: 'Pechan 3', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-3", price: 34.34, on_sale: false, status: 'active', launch_date: 1.day.ago}
+              {id: 2, name: 'Pechan 2', version: 1, category_ids: [1000], pdp_url: "http://superhost.com/products/pechan-2", price: 45.65, on_sale: false, status: 'active', launch_date: 1.day.ago, units_on_hand: 10, variant_sizes: ['5','6']},
+              {id: 3, name: 'Pechan 3', version: 1, category_ids: [1001], pdp_url: "http://superhost.com/products/pechan-3", price: 34.34, on_sale: false, status: 'active', launch_date: 1.day.ago, units_on_hand: 10, variant_sizes: ['5','6']}
           ]
       }
     }

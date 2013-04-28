@@ -1,4 +1,4 @@
-product_params =  {version: 1, pdp_url: "http://superhost.com/products/pechan-1", on_sale: false}
+product_params =  {version: 1, pdp_url: "http://superhost.com/products/pechan-1", on_sale: false, variant_sizes: ['S', 'M', 'L']}
 
 puts "Creating Products"
 100.times do |index|
@@ -8,7 +8,8 @@ puts "Creating Products"
                                     price: 30.45 + index,
                                     fulltext_keywords: "keyword#{index}",
                                     status: 'active',
-                                    launch_date: index.days.ago})
+                                    launch_date: index.days.ago,
+                                    units_on_hand: index})
   Sunspot.index Catalogillo::Product.new attributes
 end
 

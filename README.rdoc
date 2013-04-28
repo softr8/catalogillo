@@ -102,6 +102,9 @@ You can control global configurations
 
     #Default filters applied everywhere
     config.default_search_filters = { status: {equal_to: 'active'}, launch_date: {less_than: "FN_TIME_ZONE_NOW" } }
+
+    #Default units on hand scarcity level
+    config.default_scarcity_level = 5
   end
 
 == Implementing searching functionality

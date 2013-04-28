@@ -18,6 +18,8 @@ module Catalogillo
               {name: "description", type: "Text", required: false, description: "Product description"},
               {name: "long_description", type: "Text", required: false, description: "Product long description"},
               {name: "launch_date", type: "Time", required: true, description: "Product launch date"},
+              {name: "units_on_hand", type: "Integer", required: true, description: "Available units on hand"},
+              {name: "variant_sizes", type: "String-Array", required: true, description: "Available sizes"},
               {name: "pdp_url", type: "String", required: false, description: "Product detail page url"}
           ]
       }
@@ -29,6 +31,13 @@ module Catalogillo
       images.try(:first).blank? ? Catalogillo::Config.default_image : images.try(:first)
     end
 
+    def out_of_stock?
+      units_on_hand.to_i == 0
+    end
+
+    def on_scarce?
+      !out_of_stock? && units_on_hand.to_i <= Catalogillo::Config.default_scarcity_level
+    end
 
     private
     def after_initialize
