@@ -26,7 +26,7 @@ describe Catalogillo::Api::V1::CategoriesController do
     end
 
     context "indexes new records" do
-      subject { Catalogillo::Category.filter(id: 1000).first }
+      subject { Catalogillo::Category.filter(filters: {id: 1000}).first }
       before do
         post :index, valid_params
       end

@@ -118,7 +118,7 @@ module Catalogillo
     end
 
     def touch
-      version += 1
+      version = 1 + version.to_i
       index
     end
 
