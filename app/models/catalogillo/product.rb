@@ -39,6 +39,24 @@ module Catalogillo
       !out_of_stock? && units_on_hand.to_i <= Catalogillo::Config.default_scarcity_level
     end
 
+    def as_json *args
+      {
+          id: id,
+          name: name,
+          price: price,
+          sale_price: sale_price,
+          on_sale: on_sale,
+          images: images,
+          description: description,
+          long_description: long_description,
+          out_of_stock: out_of_stock?,
+          on_scarce: on_scarce?,
+          units_on_hand: on_scarce? ? units_on_hand : 0,
+          pdp_url: pdp_url,
+          variant_sizes: variant_sizes
+      }
+    end
+
     private
     def after_initialize
       Catalogillo::Category.filter(filters: {id: category_ids}).each do |category|

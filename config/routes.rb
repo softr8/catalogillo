@@ -14,4 +14,5 @@ Catalogillo::Engine.routes.draw do
 
   match "/search/(:keyword)" => 'categories#search', via: :get, as: 'catalogillo_search'
   match "/:slug" => 'categories#index', via: :get, as: 'catalogillo_index'
+  match "/product/:id(.format)" => 'products#show', via: :get, as: 'catalogillo_product'
 end

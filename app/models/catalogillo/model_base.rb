@@ -24,6 +24,17 @@ module Catalogillo
 
     include Sunspot::CatalogilloSolr
 
+    def self.find id
+      results = Collection.new( search do
+        with(:id, id)
+      end)
+      if id.is_a?(Array)
+        results
+      else
+        results.first
+      end
+    end
+
     def self.filter options = {}
       filters = options[:filters] || {}
       keyword = filters.delete(:keywords)
