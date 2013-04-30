@@ -5,6 +5,11 @@ spec/dummy/db/*.sqlite3
 spec/dummy/log/*.log
 spec/dummy/tmp/
 spec/dummy/.sass-cache
+pec/dummy4/db/*.sqlite3
+spec/dummy4/log/*.log
+spec/dummy4/tmp/
+spec/dummy4/.sass-cache
 .idea
 sunspot-solr.pid
 spec/dummy/public/
+spec/dummy4/public/

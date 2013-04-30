@@ -4,7 +4,9 @@ require 'sunspot/adapters'
 require 'sunspot/rails'
 require 'versionist'
 
-require File.expand_path("../dummy/config/environment", __FILE__)
+ENV['RAILS_VERSION'] == 'rails3' && require(File.expand_path("../dummy/config/environment", __FILE__))
+ENV['RAILS_VERSION'] == 'rails4' && require(File.expand_path("../dummy4/config/environment", __FILE__))
+
 require 'rspec/rails'
 require 'rspec/autorun'
 
