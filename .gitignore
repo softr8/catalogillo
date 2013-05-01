@@ -13,3 +13,4 @@ spec/dummy4/.sass-cache
 sunspot-solr.pid
 spec/dummy/public/
 spec/dummy4/public/
+gemfiles/*.lock
