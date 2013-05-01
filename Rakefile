@@ -38,9 +38,15 @@ namespace :test do
     end
   end
 
+  task :verify_gemfile do
+    if Dir.glob(File.join('gemfiles', '*.lock')).empty?
+      Rake::Task["test:setup"].invoke
+    end
+  end
+
   GEMFILES.each do |gemfile|
     desc "Run all tests against #{gemfile}"
-    task gemfile.downcase do
+    task gemfile.downcase => :verify_gemfile do
       sh "env RAILS_VERSION=#{gemfile} BUNDLE_GEMFILE=#{File.dirname(__FILE__) + '/gemfiles/' + gemfile} bundle exec rake spec"
     end
   end
