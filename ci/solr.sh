@@ -27,6 +27,9 @@ bundle install --quiet --path vendor/bundle
 /bin/echo -n "Starting Solr on port 8983 for specs..."
 if [ -f sunspot-solr.pid ]; then bundle exec sunspot-solr stop || true; fi
 
+git clone https://github.com/sunspot/sunspot.git
+cd sunspot
 sunspot-solr start -p 8983 -d /tmp/solr
 wait_until_solr_responds 8983
 /bin/echo "done."
+cd..
