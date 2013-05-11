@@ -32,4 +32,4 @@ cd sunspot
 bundle exec sunspot-solr start -p 8983 -d /tmp/solr
 wait_until_solr_responds 8983
 /bin/echo "done."
-cd..
+cd ..
