@@ -1,7 +1,6 @@
 language: ruby
 rvm:
   - 1.9.3
-bundler_args: --path vendor/bundle
 before_install:
   - gem update --system
 before_script: ci/solr.sh
