@@ -28,6 +28,8 @@ bundle install --quiet --path vendor/bundle
 if [ -f sunspot-solr.pid ]; then bundle exec sunspot-solr stop || true; fi
 
 git clone https://github.com/sunspot/sunspot.git
-sunspot/sunspot-solr start -p 8983 -d /tmp/solr
+cd sunspot
+sunspot-solr start -p 8983 -d /tmp/solr
 wait_until_solr_responds 8983
 /bin/echo "done."
+cd ..
