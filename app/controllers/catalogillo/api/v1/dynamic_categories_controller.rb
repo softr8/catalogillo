@@ -6,7 +6,8 @@ module Catalogillo
         def index
           search_query = params[:dynamic_category].delete(:search_query)
           sorting_options = params[:dynamic_category].delete(:sorting_options)
-          Sunspot.index DynamicCategory.new params[:dynamic_category].merge(search_query: ActiveSupport::JSON.encode(search_query), sorting_options: ActiveSupport::JSON.encode(sorting_options))
+          category = DynamicCategory.new params[:dynamic_category].merge(search_query: ActiveSupport::JSON.encode(search_query), sorting_options: ActiveSupport::JSON.encode(sorting_options))
+          category.index
           head Sunspot.commit ? :ok : :unprocessable_entity
         end
 

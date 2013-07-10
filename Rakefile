@@ -27,7 +27,8 @@ RDoc::Task.new(:rdoc) do |rdoc|
 end
 
 
-GEMFILES = %w(rails3 rails4)
+#GEMFILES = %w(rails3 rails4)
+GEMFILES = %w(rails3)
 
 namespace :test do
   desc "Installs all dependencies"

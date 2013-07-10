@@ -58,7 +58,7 @@ module Catalogillo
     end
 
     private
-    def after_initialize
+    def after_index
       Catalogillo::Category.filter(filters: {id: category_ids}).each do |category|
         category.touch
       end

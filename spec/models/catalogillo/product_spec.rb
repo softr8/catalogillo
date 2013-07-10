@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Catalogillo::Product do
   context ".filter" do
-    let(:valid_params) {
+    def valid_params
       {version: 1, pdp_url: "http://superhost.com/products/pechan-1", price: 34.56, on_sale: false, status: 'active', launch_date: 1.day.ago, variant_sizes: ['S', 'M', 'L']}
-    }
+    end
     before :all do
       10.times do |index|
         Sunspot.index Catalogillo::Product.new valid_params.merge(id: index,
@@ -145,14 +145,15 @@ describe Catalogillo::Product do
       it "updates category version" do
         Catalogillo::Category.stub(:filter).with(any_args).and_return([category])
         category.should_receive(:touch)
-        Catalogillo::Product.new product_params
+        product = Catalogillo::Product.new product_params
+        product.index
       end
 
       it "updates dyamic category version" do
         Catalogillo::DynamicCategory.stub(:filter).with(any_args).and_return([dynamic_category])
         Catalogillo::Product.stub(:filter).with(any_args).and_return([1])
         dynamic_category.should_receive(:touch)
-        Catalogillo::Product.new product_params
+        Catalogillo::Product.new(product_params).index
       end
     end
   end

@@ -2,7 +2,6 @@
 ENV["RAILS_ENV"] ||= 'test'
 require 'sunspot/adapters'
 require 'sunspot/rails'
-require 'versionist'
 
 ENV['RAILS_VERSION'] == 'rails3' && require(File.expand_path("../dummy/config/environment", __FILE__))
 ENV['RAILS_VERSION'] == 'rails4' && require(File.expand_path("../dummy4/config/environment", __FILE__))

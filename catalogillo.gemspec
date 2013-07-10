@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails', '>= 3.2'
   s.add_dependency 'bootstrap-sass', '>= 2.3'
   s.add_dependency "jquery-rails"
-  s.add_dependency "versionist", '>= 1.0'
   s.add_dependency "kaminari"
   s.add_dependency "dalli"
   s.add_dependency "memcache-client"

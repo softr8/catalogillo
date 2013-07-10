@@ -19,10 +19,15 @@ module Catalogillo
         instance_variable_set("@#{key}", value)
       end
 
-      after_initialize if respond_to?(:after_initialize, true)
     end
 
     include Sunspot::CatalogilloSolr
+
+    def index
+      before_index if respond_to?(:before_index, true)
+      Sunspot.index self
+      after_index if respond_to?(:after_index, true)
+    end
 
     def self.find id
       results = Collection.new( search do

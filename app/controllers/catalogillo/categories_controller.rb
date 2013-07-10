@@ -26,6 +26,7 @@ module Catalogillo
       render :index
     end
 
+
     private
     def pagination_variables
       @current_page = params[:page] || Catalogillo::Config.page
