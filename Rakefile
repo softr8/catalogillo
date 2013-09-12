@@ -56,7 +56,7 @@ namespace :test do
 end
 
 desc "Run all specs"
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) rescue nil
 
 desc 'Run all against every specified rails version'
 task :test => 'test:all'

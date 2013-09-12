@@ -13,8 +13,10 @@
       </div>
       <div class="row">
         <div class="span12">
-          Sort By
-          <%= select_tag :sort_by, options_for_select(available_sorting_options(@category.available_sorting_options), @sort_by) %>
+          <%= form_tag('', method: :get) do %>
+            Sort By
+            <%= select_tag :sort_by, options_for_select(available_sorting_options(@category.available_sorting_options), @sort_by.join(',')) %>
+          <% end %>
         </div>
       </div>
       <%= content_tag(Catalogillo::Config.default_products_container[:tag], class: Catalogillo::Config.default_products_container[:class]) do %>
@@ -30,3 +32,7 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  catalogillo.catalog.category.initialize();
+</script>

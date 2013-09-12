@@ -5,3 +5,4 @@ gemfile: gemfiles/rails3
 before_install:
   - gem update --system
 before_script: ci/solr.sh
+script: "rake test:setup test:rails3"
