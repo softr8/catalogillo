@@ -20,9 +20,7 @@
         </div>
       </div>
       <%= content_tag(Catalogillo::Config.default_products_container[:tag], class: Catalogillo::Config.default_products_container[:class]) do %>
-        <% @hits.each do |hit| %>
-          <%= render partial: 'product', locals: {hit: hit} %>
-        <% end %>
+        <%= render partial: 'product', collection: @hits, cache: Proc.new {|hit| [hit.id, hit.version, 'product_tile']}%>
       <% end %>
       <div class="row">
         <div class="span12">

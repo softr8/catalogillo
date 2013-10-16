@@ -74,6 +74,9 @@ Install this gem into a rails application and do not use active record and mount
   #Gemfile
   gem 'catalogillo', github: '/softr8/catalogillo'
 
+  #for better performance, add this too:
+  gem 'multi_fetch_fragments'
+
   #config/routes.rb
   mount Catalogillo::Engine => "/store"
 

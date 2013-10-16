@@ -7,6 +7,7 @@ PATH
       jquery-rails
       kaminari
       memcache-client
+      multi_fetch_fragments
       rails (>= 3.2)
       sass-rails (>= 3.2)
       sunspot_rails (>= 2.0)
@@ -65,6 +66,7 @@ GEM
     memcache-client (1.8.5)
     method_source (0.8.1)
     mime-types (1.21)
+    multi_fetch_fragments (0.0.17)
     multi_json (1.6.1)
     nokogiri (1.5.6)
     polyglot (0.3.3)
@@ -141,6 +143,7 @@ DEPENDENCIES
   catalogillo!
   jquery-rails
   kaminari
+  multi_fetch_fragments
   pry
   sunspot_rails (>= 2.0)
   unicorn

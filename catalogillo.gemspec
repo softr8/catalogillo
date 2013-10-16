@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_dependency "kaminari"
   s.add_dependency "dalli"
   s.add_dependency "memcache-client"
+  s.add_dependency "multi_fetch_fragments"
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'sunspot_solr'
 end
