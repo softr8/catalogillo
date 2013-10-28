@@ -4,5 +4,5 @@ rvm:
 gemfile: spec/dummy/Gemfile
 before_install:
   - gem update --system
-before_script: ci/solr.sh
-script: "RAILS_VERSION=rails3 BUNDLE_GEMFILE=gemfiles/rails3 bundle exec rake spec"
+before_script: sunspot-solr start
+script: "RAILS_VERSION=rails3 bundle exec rake spec"
