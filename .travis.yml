@@ -5,4 +5,4 @@ gemfile: gemfiles/rails3
 before_install:
   - gem update --system
 before_script: ci/solr.sh
-script: "bundle exec rake"
+script: "RAILS_VERSION=rails3 BUNDLE_GEMFILE=gemfiles/rails3 bundle exec rake spec"
