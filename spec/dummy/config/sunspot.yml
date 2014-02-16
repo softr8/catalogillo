@@ -4,12 +4,16 @@ development:
     port: 8983
     log_level: INFO
     auto_commit_after_request: false
+    path: /solr/development
 
 production:
   solr:
     hostname: localhost
     port: 8983
     auto_commit_after_request: false
+    path: /solr/production
+    read_timeout: 20
+    open_timeout: 1
 
 test:
   solr:
@@ -17,3 +21,4 @@ test:
     port: 8984
     log_level: WARNING
     auto_commit_after_request: false
+    path: /solr/test

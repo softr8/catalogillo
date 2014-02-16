@@ -124,11 +124,11 @@ If you want to have a look at it, you can launch the dummy app from spec's folde
 
   cd spec/dummy
   bundle
-  be sunspot-solr start
-  be rails c
-    include './db/seed.rb'
+  bundle exec rake sunspot:solr:start
+  bundle exec rails c
+    require './db/seed.rb'
     exit
-  be rails s
+  bundle exec rails s
 
 == TODO
 * Add security to API endpoints
