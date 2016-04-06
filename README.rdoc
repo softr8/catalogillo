@@ -161,7 +161,7 @@ I did some preliminary benchmark tests and I got this using my MBP(mid 2012 reti
 It used memcached cache store, solr storing 10k products and 1 category
 
 == About the author
-I work at {Crowd Interactive}[http://www.crowdint.com], it is a leading Ruby and Rails
+I work at {MagmaLabs}[http://www.magmalabs.io], it is a leading Ruby and Rails
 consultancy firm based in Mexico currently doing business with startups in the
 United States. We specialize in building and growing Rails applications, by increasing
 your IT crew onsite or offsite. We pick our projects carefully, as we only work
